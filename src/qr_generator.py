@@ -1,22 +1,34 @@
 import qrcode
 import time
-import random
 import os
+import secrets
 
-os.makedirs("src/static", exist_ok=True)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
+token_path = os.path.join(STATIC_DIR, "token.txt")
+qr_path = os.path.join(STATIC_DIR, "attendance_qr.png")
+# ensure folder exists
+os.makedirs(STATIC_DIR, exist_ok=True)
+
+SERVER_IP = "192.168.73.104"
+PORT = "5000"
 
 while True:
 
-    token = str(random.randint(100000,999999))
+    token = secrets.token_hex(4)
 
-    # save token for verification
-    with open("src/static/token.txt","w") as f:
+    token_path = os.path.join(STATIC_DIR, "token.txt")
+    qr_path = os.path.join(STATIC_DIR, "attendance_qr.png")
+
+    with open(token_path, "w") as f:
         f.write(token)
 
-    qr = qrcode.make("http://192.168.73.104:5000/scan?token="+token)
+    url = f"http://{SERVER_IP}:{PORT}/scan?token={token}"
 
-    qr.save("src/static/attendance_qr.png")
+    qr = qrcode.make(url)
+    qr.save(qr_path)
 
     print("New QR Token:", token)
 
-    time.sleep(10)   # QR changes every 10 seconds
+    time.sleep(20)
