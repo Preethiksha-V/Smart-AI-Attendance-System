@@ -151,13 +151,6 @@ The system uses a combination of custom and public datasets.
 
 ---
 
-## 👥 Team Members
-
-* **Preethikshabala V**
-* **Prethiks D**
-
----
-
 ## 📚 Research Contribution
 
 This project aims to contribute to **Smart Campus Automation** by integrating **multi-modal biometric authentication** with AI-driven attendance analytics.
